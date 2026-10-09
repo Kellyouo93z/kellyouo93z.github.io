@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="dark scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio // Multidisciplinary Creative</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#f0fdf4',
+                            500: '#22c55e',
+                            900: '#14532d',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Custom scrollbar & glassmorphism refinement */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.05);
+        }
+        .dark ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.02);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(150, 150, 150, 0.3);
+            border-radius: 999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(150, 150, 150, 0.5);
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+        .dark .glass-panel {
+            background: rgba(18, 18, 20, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+        }
+    </style>
+</head>
+<body class="bg-zinc-50 text-zinc-900 dark:bg-zinc-950 dark:text-zinc-100 min-h-screen font-sans antialiased selection:bg-emerald-500 selection:text-white transition-colors duration-300">
+
+    <!-- HEADER / NAVIGATION -->
+    <header class="sticky top-0 z-40 w-full border-b border-zinc-200 dark:border-zinc-800/80 glass-panel transition-colors duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <!-- Brand / Name -->
+            <div class="flex items-center space-x-3">
+                <div class="w-3 h-3 rounded-full bg-emerald-500 animate-pulse"></div>
+                <span id="nav-brand-name" class="font-mono text-sm tracking-wider uppercase font-semibold text-zinc-800 dark:text-zinc-200">
+                    YOUR NAME
+                </span>
+                <span class="text-xs text-zinc-400 font-mono hidden sm:inline-block">// PORTFOLIO</span>
+            </div>
+
+            <!-- Header Right: Quick Actions & Dark Mode -->
+            <div class="flex items-center space-x-3">
+                <!-- Name Edit Quick Button -->
+                <button onclick="openNameModal()" class="px-3 py-1.5 text-xs font-mono rounded-lg border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition flex items-center gap-1.5 text-zinc-600 dark:text-zinc-300">
+                    <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+                    <span class="hidden md:inline">自定义姓名</span>
+                </button>
+
+                <!-- Dark/Light Theme Toggle -->
+                <button id="theme-toggle" class="p-2 rounded-lg border border-zinc-200 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition text-zinc-600 dark:text-zinc-300" title="切换深色/浅色模式">
+                    <i id="theme-icon-sun" data-lucide="sun" class="w-4 h-4 hidden dark:block"></i>
+                    <i id="theme-icon-moon" data-lucide="moon" class="w-4 h-4 block dark:hidden"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-8 sm:pt-20 sm:pb-12">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+            <div class="lg:col-span-8 space-y-6">
+                <!-- Small Tag -->
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono border border-emerald-500/30 bg-emerald-500/10 text-emerald-600 dark:text-emerald-400">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                    Available for Commissions & Projects
+                </div>
+
+                <!-- Main Hero Title -->
+                <h1 id="hero-display-name" class="text-4xl sm:text-6xl font-bold tracking-tight text-zinc-900 dark:text-white leading-none">
+                    YOUR NAME
+                </h1>
+
+                <!-- Bio & Subtitle -->
+                <p id="hero-bio" class="text-lg sm:text-xl text-zinc-600 dark:text-zinc-400 max-w-2xl font-light leading-relaxed">
+                    跨界设计师与数字艺术家。专注于游戏设计、交互装置、Web前端体验、AI影像及多媒体视觉系统的开发与探索。
+                </p>
+
+                <!-- Social & Contact Links -->
+                <div class="flex flex-wrap gap-3 pt-2">
+                    <a href="mailto:contact@example.com" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 hover:opacity-90 transition text-xs font-medium">
+                        <i data-lucide="mail" class="w-4 h-4"></i>
+                        Get In Touch
+                    </a>
+                    <a href="https://github.com" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-zinc-300 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition text-xs font-medium">
+                        <i data-lucide="github" class="w-4 h-4"></i>
+                        GitHub
+                    </a>
+                    <a href="https://instagram.com" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-zinc-300 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition text-xs font-medium">
+                        <i data-lucide="instagram" class="w-4 h-4"></i>
+                        Instagram
+                    </a>
+                    <a href="https://linkedin.com" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-zinc-300 dark:border-zinc-800 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition text-xs font-medium">
+                        <i data-lucide="linkedin" class="w-4 h-4"></i>
+                        LinkedIn
+                    </a>
+                </div>
+            </div>
+
+            <!-- Mini Stats / Categories Overview -->
+            <div class="lg:col-span-4 p-6 rounded-2xl border border-zinc-200 dark:border-zinc-800/80 bg-zinc-100/50 dark:bg-zinc-900/40 space-y-4">
+                <div class="text-xs font-mono uppercase tracking-wider text-zinc-400">Practices & Disciplines</div>
+                <div class="grid grid-cols-2 gap-2 text-xs font-mono text-zinc-600 dark:text-zinc-300">
+                    <span class="flex items-center gap-1.5"><i data-lucide="gamepad-2" class="w-3.5 h-3.5 text-emerald-500"></i> Game Design</span>
+                    <span class="flex items-center gap-1.5"><i data-lucide="sparkles" class="w-3.5 h-3.5 text-emerald-500"></i> Installation</span>
+                    <span class="flex items-center gap-1.5"><i data-lucide="code" class="w-3.5 h-3.5 text-emerald-500"></i> Web Interactive</span>
+                    <span class="flex items-center gap-1.5"><i data-lucide="camera" class="w-3.5 h-3.5 text-emerald-500"></i> Photography</span>
+                    <span class="flex items-center gap-1.5"><i data-lucide="film" class="w-3.5 h-3.5 text-emerald-500"></i> Animation</span>
+                    <span class="flex items-center gap-1.5"><i data-lucide="layout" class="w-3.5 h-3.5 text-emerald-500"></i> UI / UX Design</span>
+                    <span class="flex items-center gap-1.5"><i data-lucide="palette" class="w-3.5 h-3.5 text-emerald-500"></i> Fine Art</span>
+                    <span class="flex items-center gap-1.5"><i data-lucide="bot" class="w-3.5 h-3.5 text-emerald-500"></i> AI Film</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CATEGORY FILTER SYSTEM -->
+    <section class="sticky top-16 z-30 w-full border-y border-zinc-200 dark:border-zinc-800/80 glass-panel py-3 my-4 transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between gap-4">
+                <!-- Category Pills (Horizontal Scroll on Mobile) -->
+                <div id="category-bar" class="flex items-center space-x-2 overflow-x-auto no-scrollbar py-1 w-full">
+                    <!-- Dynamic rendering via JS -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECTS GRID SECTION -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 min-h-[60vh]">
+        <!-- Active Filter Breadcrumb -->
+        <div class="flex items-center justify-between mb-6">
+            <div class="flex items-center space-x-2 text-xs font-mono text-zinc-500 dark:text-zinc-400">
+                <span>PROJECTS</span>
+                <span>/</span>
+                <span id="active-category-title" class="text-emerald-600 dark:text-emerald-400 uppercase font-semibold">ALL CATEGORIES</span>
+            </div>
+            <div id="project-count" class="text-xs font-mono text-zinc-400">Showing 8 projects</div>
+        </div>
+
+        <!-- Project Grid -->
+        <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Project Cards inserted dynamically via JavaScript -->
+        </div>
+
+        <!-- Empty State (Hidden by default) -->
+        <div id="empty-state" class="hidden py-24 text-center space-y-4">
+            <div class="inline-p-4 rounded-full bg-zinc-100 dark:bg-zinc-900 p-4 text-zinc-400">
+                <i data-lucide="folder-open" class="w-8 h-8 mx-auto"></i>
+            </div>
+            <p class="text-sm font-mono text-zinc-500">该分类下暂无展示项目。</p>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="border-t border-zinc-200 dark:border-zinc-800/80 py-12 mt-20 transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="text-xs font-mono text-zinc-500">
+                &copy; <span id="footer-year"></span> <span id="footer-name">YOUR NAME</span>. All rights reserved.
+            </div>
+            <div class="flex items-center space-x-6 text-xs font-mono text-zinc-500">
+                <button onclick="scrollToTop()" class="hover:text-emerald-500 transition flex items-center gap-1">
+                    Back to top <i data-lucide="arrow-up" class="w-3.5 h-3.5"></i>
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- PROJECT DETAIL MODAL OVERLAY -->
+    <div id="project-modal" class="fixed inset-0 z-50 hidden overflow-y-auto bg-zinc-950/80 backdrop-blur-md flex items-center justify-center p-4 sm:p-6 lg:p-8">
+        <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl transition-all relative">
+            
+            <!-- Sticky Modal Header Bar -->
+            <div class="sticky top-0 z-10 glass-panel border-b border-zinc-200 dark:border-zinc-800 px-6 py-4 flex items-center justify-between">
+                <span id="modal-category-badge" class="px-2.5 py-1 rounded-full text-xs font-mono bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border border-emerald-500/20">
+                    CATEGORY
+                </span>
+                <button onclick="closeProjectModal()" class="p-2 rounded-full hover:bg-zinc-200 dark:hover:bg-zinc-800 transition text-zinc-500 hover:text-zinc-900 dark:hover:text-white">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+            </div>
+
+            <!-- Modal Content Body -->
+            <div class="p-6 sm:p-8 space-y-8">
+                <!-- Cover Image -->
+                <div class="relative aspect-video rounded-xl overflow-hidden bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-800">
+                    <img id="modal-image" src="" alt="Project Preview" class="w-full h-full object-cover">
+                </div>
+
+                <!-- Title & Meta Bar -->
+                <div class="space-y-4">
+                    <h2 id="modal-title" class="text-2xl sm:text-3xl font-bold tracking-tight text-zinc-900 dark:text-white">
+                        Project Title
+                    </h2>
+                    
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 p-4 rounded-xl bg-zinc-50 dark:bg-zinc-950/50 border border-zinc-200 dark:border-zinc-800/80 text-xs font-mono">
+                        <div>
+                            <div class="text-zinc-400">YEAR</div>
+                            <div id="modal-year" class="font-semibold text-zinc-800 dark:text-zinc-200">2024</div>
+                        </div>
+                        <div>
+                            <div class="text-zinc-400">ROLE</div>
+                            <div id="modal-role" class="font-semibold text-zinc-800 dark:text-zinc-200">Lead Creator</div>
+                        </div>
+                        <div class="col-span-2">
+                            <div class="text-zinc-400">TOOLS USED</div>
+                            <div id="modal-tools" class="font-semibold text-zinc-800 dark:text-zinc-200">Unreal Engine, Blender, Python</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Detailed Narrative / Description -->
+                <div class="space-y-3">
+                    <h3 class="text-xs font-mono uppercase tracking-wider text-zinc-400">Overview & Concept</h3>
+                    <p id="modal-description" class="text-zinc-600 dark:text-zinc-300 text-sm leading-relaxed font-light">
+                        Detailed project breakdown goes here...
+                    </p>
+                </div>
+
+                <!-- Interactive Links / CTA -->
+                <div class="pt-4 border-t border-zinc-200 dark:border-zinc-800 flex flex-wrap gap-4">
+                    <a id="modal-live-link" href="#" target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-emerald-500 hover:bg-emerald-600 text-white font-medium text-xs transition">
+                        <span>Launch Live Demo</span>
+                        <i data-lucide="external-link" class="w-4 h-4"></i>
+                    </a>
+                    <a id="modal-doc-link" href="#" target="_blank" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl border border-zinc-300 dark:border-zinc-700 hover:bg-zinc-100 dark:hover:bg-zinc-800 font-medium text-xs transition">
+                        <span>Read Documentation</span>
+                        <i data-lucide="file-text" class="w-4 h-4"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- NAME CUSTOMIZATION MODAL -->
+    <div id="name-modal" class="fixed inset-0 z-50 hidden bg-zinc-950/80 backdrop-blur-sm flex items-center justify-center p-4">
+        <div class="bg-white dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 rounded-2xl max-w-md w-full p-6 space-y-6">
+            <div class="flex justify-between items-center">
+                <h3 class="text-base font-semibold">修改作者个人信息</h3>
+                <button onclick="closeNameModal()" class="text-zinc-400 hover:text-zinc-100"><i data-lucide="x" class="w-4 h-4"></i></button>
+            </div>
+            <div class="space-y-4 text-xs font-mono">
+                <div>
+                    <label class="block mb-1 text-zinc-400">你的名字 / NAME</label>
+                    <input id="input-name" type="text" value="YOUR NAME" class="w-full px-3 py-2 rounded-lg bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 focus:outline-none focus:border-emerald-500 text-sm">
+                </div>
+                <div>
+                    <label class="block mb-1 text-zinc-400">个人简介 / BIO</label>
+                    <textarea id="input-bio" rows="3" class="w-full px-3 py-2 rounded-lg bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 focus:outline-none focus:border-emerald-500 text-sm">跨界设计师与数字艺术家。专注于游戏设计、交互装置、Web前端体验、AI影像及多媒体视觉系统的开发与探索。</textarea>
+                </div>
+            </div>
+            <div class="flex justify-end gap-2">
+                <button onclick="closeNameModal()" class="px-4 py-2 rounded-lg text-xs font-mono border border-zinc-300 dark:border-zinc-700">取消</button>
+                <button onclick="saveNameCustomization()" class="px-4 py-2 rounded-lg text-xs font-mono bg-emerald-500 text-white font-semibold">保存更改</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        /* ------------------------------------------------------------------
+           DATA STRUCTURE: ALL 8 REQUESTED CATEGORIES & SAMPLE PROJECTS
+           你可以在这里修改、添加或替换成你自己的项目数据！
+        ------------------------------------------------------------------ */
+        const CATEGORIES = [
+            'All',
+            'Game Design',
+            'Interactive Installation',
+            'Web-based Interaction',
+            'Photography',
+            'Animation',
+            'UI / UX Design',
+            'Fine Art',
+            'AI Film'
+        ];
+
+        const PROJECTS = [
+            {
+                id: 'p1',
+                title: 'Echoes of Aetherium',
+                category: 'Game Design',
+                year: '2024',
+                role: 'Solo Game Developer & Level Designer',
+                tools: 'Unreal Engine 5, C++, Maya, FMOD',
+                image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=1200&q=80',
+                summary: '一款探究赛博朋克失落文明的反乌托邦动作冒险游戏。玩家通过声波频率解开沉睡都市的机关。',
+                liveUrl: 'https://store.steampowered.com',
+                docUrl: 'https://github.com'
+            },
+            {
+                id: 'p2',
+                title: 'Kinetic Light Pulse',
+                category: 'Interactive Installation',
+                year: '2023',
+                role: 'Interactive Engineer & Spatial Designer',
+                tools: 'TouchDesigner, Arduino, LiDAR Sensor, DMX512',
+                image: 'https://images.unsplash.com/photo-1508739773434-c26b3d09e071?auto=format&fit=crop&w=1200&q=80',
+                summary: '大型沉浸式灯光装置。通过毫米波雷达捕捉观众的心跳与步态，将其转化为动态机械光影与低音共振。',
+                liveUrl: 'https://vimeo.com',
+                docUrl: 'https://github.com'
+            },
+            {
+                id: 'p3',
+                title: 'Orbital Audio Visualizer',
+                category: 'Web-based Interaction',
+                year: '2024',
+                role: 'Creative Technologist',
+                tools: 'Three.js, WebGL, Web Audio API, Tailwind',
+                image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=1200&q=80',
+                summary: '运行在浏览器端的三维生成式音效视觉化系统，用户可实时导入音频文件并调整三维粒子场演化参数。',
+                liveUrl: 'https://example.com',
+                docUrl: 'https://github.com'
+            },
+            {
+                id: 'p4',
+                title: 'Monochrome Geometry',
+                category: 'Photography',
+                year: '2023',
+                role: 'Photographer & Art Director',
+                tools: 'Leica Q2, Adobe Lightroom, Medium Format Print',
+                image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80',
+                summary: '极简主义建筑摄影系列。探索现代都市钢筋水泥建筑在光影交错下的几何张力与孤独质感。',
+                liveUrl: 'https://behance.net',
+                docUrl: 'https://instagram.com'
+            },
+            {
+                id: 'p5',
+                title: 'Chronos Mechanical Loop',
+                category: 'Animation',
+                year: '2024',
+                role: '3D Motion Designer',
+                tools: 'Cinema 4D, Octane Render, After Effects',
+                image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80',
+                summary: '3D 循环机械三维动效短片，表达时间解构与机械运转的和谐律动，获 2024 数字艺术展提名。',
+                liveUrl: 'https://artstation.com',
+                docUrl: 'https://behance.net'
+            },
+            {
+                id: 'p6',
+                title: 'NeuraOS Spatial Interface',
+                category: 'UI / UX Design',
+                year: '2024',
+                role: 'Principal Product Designer',
+                tools: 'Figma, Spline 3D, Protopie',
+                image: 'https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?auto=format&fit=crop&w=1200&q=80',
+                summary: '面向下一代空间计算（Spatial Computing）的操作系统 UI/UX 规范与原型，极简毛玻璃卡片与手势交互。',
+                liveUrl: 'https://figma.com',
+                docUrl: 'https://dribbble.com'
+            },
+            {
+                id: 'p7',
+                title: 'Entropy & Algorithmic Canvas',
+                category: 'Fine Art',
+                year: '2023',
+                role: 'Generative Artist',
+                tools: 'Processing, Pen Plotter, Acrylic on Canvas',
+                image: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=1200&q=80',
+                summary: '算法生成艺术作品集。结合代码产生的熵变路径与物理数控绘图仪，在物理画布上呈现科技与纯艺术的交汇。',
+                liveUrl: 'https://superrare.com',
+                docUrl: 'https://github.com'
+            },
+            {
+                id: 'p8',
+                title: 'Subterranean Synthetic Dreams',
+                category: 'AI Film',
+                year: '2024',
+                role: 'Director & AI Prompter',
+                tools: 'Midjourney, Runway Gen-2, ElevenLabs, Premiere',
+                image: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1200&q=80',
+                summary: '完全基于 AI 生成的科幻短片，描述人类将意识上传至地底量子服务器后的虚拟社会演变故事。',
+                liveUrl: 'https://youtube.com',
+                docUrl: 'https://vimeo.com'
+            }
+        ];
+
+        let currentCategory = 'All';
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('footer-year').textContent = new Date().getFullYear();
+            setupThemeToggle();
+            renderCategoryBar();
+            renderProjects();
+            lucide.createIcons();
+            loadSavedProfile();
+        });
+
+        // Render Category Filter Buttons
+        function renderCategoryBar() {
+            const container = document.getElementById('category-bar');
+            container.innerHTML = CATEGORIES.map(cat => {
+                const isActive = cat === currentCategory;
+                return `
+                    <button 
+                        onclick="setCategory('${cat}')" 
+                        class="px-4 py-1.5 rounded-full text-xs font-mono whitespace-nowrap transition-all duration-200 ${
+                            isActive 
+                            ? 'bg-zinc-900 text-white dark:bg-zinc-100 dark:text-zinc-900 font-semibold shadow-sm' 
+                            : 'text-zinc-600 dark:text-zinc-400 hover:bg-zinc-200/60 dark:hover:bg-zinc-800/60'
+                        }">
+                        ${cat}
+                    </button>
+                `;
+            }).join('');
+        }
+
+        // Switch Active Category Filter
+        function setCategory(category) {
+            currentCategory = category;
+            document.getElementById('active-category-title').textContent = category.toUpperCase();
+            renderCategoryBar();
+            renderProjects();
+        }
+
+        // Render Projects Grid
+        function renderProjects() {
+            const grid = document.getElementById('projects-grid');
+            const emptyState = document.getElementById('empty-state');
+            
+            const filtered = currentCategory === 'All' 
+                ? PROJECTS 
+                : PROJECTS.filter(p => p.category === currentCategory);
+
+            document.getElementById('project-count').textContent = `Showing ${filtered.length} projects`;
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+
+            grid.innerHTML = filtered.map(p => `
+                <div onclick="openProjectModal('${p.id}')" 
+                     class="group cursor-pointer rounded-2xl border border-zinc-200 dark:border-zinc-800/80 bg-white dark:bg-zinc-900/50 overflow-hidden hover:border-emerald-500/50 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex flex-col justify-between">
+                    
+                    <div>
+                        <!-- Thumbnail Container -->
+                        <div class="relative aspect-video overflow-hidden bg-zinc-100 dark:bg-zinc-800">
+                            <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 ease-out">
+                            <div class="absolute top-3 left-3">
+                                <span class="px-2.5 py-1 rounded-full text-[10px] font-mono bg-zinc-950/70 text-zinc-200 backdrop-blur-md border border-white/10">
+                                    ${p.category}
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- Card Info Body -->
+                        <div class="p-5 space-y-2">
+                            <div class="flex items-center justify-between text-xs font-mono text-zinc-400">
+                                <span>${p.year}</span>
+                                <i data-lucide="arrow-up-right" class="w-4 h-4 text-zinc-400 group-hover:text-emerald-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all"></i>
+                            </div>
+                            <h3 class="text-base font-bold text-zinc-900 dark:text-zinc-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors">
+                                ${p.title}
+                            </h3>
+                            <p class="text-xs text-zinc-500 dark:text-zinc-400 line-clamp-2 font-light">
+                                ${p.summary}
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Card Footer -->
+                    <div class="px-5 pb-5 pt-0 text-[11px] font-mono text-zinc-400 border-t border-zinc-100 dark:border-zinc-800/40 mt-3 pt-3">
+                        <span class="truncate block">Tools: ${p.tools}</span>
+                    </div>
+                </div>
+            `).join('');
+
+            lucide.createIcons();
+        }
+
+        // Open Project Modal
+        function openProjectModal(id) {
+            const p = PROJECTS.find(item => item.id === id);
+            if (!p) return;
+
+            document.getElementById('modal-title').textContent = p.title;
+            document.getElementById('modal-category-badge').textContent = p.category;
+            document.getElementById('modal-year').textContent = p.year;
+            document.getElementById('modal-role').textContent = p.role;
+            document.getElementById('modal-tools').textContent = p.tools;
+            document.getElementById('modal-description').textContent = p.summary;
+            document.getElementById('modal-image').src = p.image;
+            document.getElementById('modal-live-link').href = p.liveUrl;
+            document.getElementById('modal-doc-link').href = p.docUrl;
+
+            const modal = document.getElementById('project-modal');
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeProjectModal() {
+            const modal = document.getElementById('project-modal');
+            modal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Personalization Modal
+        function openNameModal() {
+            document.getElementById('name-modal').classList.remove('hidden');
+        }
+
+        function closeNameModal() {
+            document.getElementById('name-modal').classList.add('hidden');
+        }
+
+        function saveNameCustomization() {
+            const name = document.getElementById('input-name').value.trim() || 'YOUR NAME';
+            const bio = document.getElementById('input-bio').value.trim();
+
+            document.getElementById('nav-brand-name').textContent = name;
+            document.getElementById('hero-display-name').textContent = name;
+            document.getElementById('footer-name').textContent = name;
+            document.getElementById('hero-bio').textContent = bio;
+
+            // Save to LocalStorage
+            localStorage.setItem('portfolio_name', name);
+            localStorage.setItem('portfolio_bio', bio);
+
+            closeNameModal();
+        }
+
+        function loadSavedProfile() {
+            const savedName = localStorage.getItem('portfolio_name');
+            const savedBio = localStorage.getItem('portfolio_bio');
+            if (savedName) {
+                document.getElementById('nav-brand-name').textContent = savedName;
+                document.getElementById('hero-display-name').textContent = savedName;
+                document.getElementById('footer-name').textContent = savedName;
+                document.getElementById('input-name').value = savedName;
+            }
+            if (savedBio) {
+                document.getElementById('hero-bio').textContent = savedBio;
+                document.getElementById('input-bio').value = savedBio;
+            }
+        }
+
+        // Theme Toggle Handler
+        function setupThemeToggle() {
+            const toggleBtn = document.getElementById('theme-toggle');
+            toggleBtn.addEventListener('click', () => {
+                const isDark = document.documentElement.classList.toggle('dark');
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            });
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
